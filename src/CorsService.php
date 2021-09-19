@@ -34,7 +34,10 @@ class CorsService
             'allowedMethods' => array(),
             'maxAge' => 0,
         );
-
+        $requestURL = request()->url();
+        if (str_contains($requestURL,'api/visitor-kiosk/v1') || str_contains($requestURL,'api/room-signage/v1')){
+            $options['allowedOrigins'] = config('cors.allowed_device_origins');
+        }
         // normalize array('*') to true
         if (in_array('*', $options['allowedOrigins'])) {
             $options['allowedOrigins'] = true;
