@@ -43,11 +43,8 @@ class CorsService
             } else {
                 $options['allowedOrigins'] = config('cors.device_environment_origins')['dev'];
             }
+            $options['allowedOriginsPatterns'] = [];
         }
-        logger($requestURL);
-        logger( config('app.server'));
-        logger("allowedOrigins ", $options['allowedOrigins']);
-        logger(request()->headers->get('Origin'));
         // normalize array('*') to true
         if (in_array('*', $options['allowedOrigins'])) {
             $options['allowedOrigins'] = true;
@@ -151,7 +148,6 @@ class CorsService
 
     private function configureAllowedOrigin(Response $response, Request $request)
     {
-        logger($this->options['allowedOrigins']);
         if ($this->options['allowedOrigins'] === true && !$this->options['supportsCredentials']) {
             // Safe+cacheable, allow everything
             $response->headers->set('Access-Control-Allow-Origin', '*');
