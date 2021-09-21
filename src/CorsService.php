@@ -35,13 +35,13 @@ class CorsService
             'maxAge' => 0,
         );
         $requestURL = request()->url();
-        if (str_contains($requestURL, 'api/visitor-kiosk/v1') || str_contains($requestURL, 'api/room-signage/v1')) {
+        if ((config('app.server') !== 'local') && str_contains($requestURL, 'api/visitor-kiosk/v1') || str_contains($requestURL, 'api/room-signage/v1')) {
             if (config('app.server') == 'prod') {
-                $options['allowedOrigins'] = [config('cors.device_environment_origins')[config('app.server')]];
+                $options['allowedOrigins'] = config('cors.device_environment_origins')['prod'];
             } elseif (config('app.server') == 'uat') {
-                $options['allowedOrigins'] = [config('cors.device_environment_origins')[config('app.server')]];
+                $options['allowedOrigins'] = config('cors.device_environment_origins')['uat'];
             } else {
-                $options['allowedOrigins'] = [config('cors.device_environment_origins')['dev']];
+                $options['allowedOrigins'] = config('cors.device_environment_origins')['dev'];;
             }
         }
         // normalize array('*') to true
