@@ -47,6 +47,7 @@ class CorsService
         logger($requestURL);
         logger( config('app.server'));
         logger("allowedOrigins ", $options['allowedOrigins']);
+        logger(request()->headers->get('Origin'));
         // normalize array('*') to true
         if (in_array('*', $options['allowedOrigins'])) {
             $options['allowedOrigins'] = true;
