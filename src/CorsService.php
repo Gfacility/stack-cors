@@ -35,7 +35,7 @@ class CorsService
             'maxAge' => 0,
         );
         $requestURL = request()->url();
-        if ((config('app.server') == 'prod') && (str_contains($requestURL, 'api/visitor-kiosk/v1') || str_contains($requestURL, 'api/room-signage/v1'))) {
+        if ((config('app.server') == 'prod') && (str_contains($requestURL, 'api/v1') || str_contains($requestURL, 'api/visitor-kiosk/v1') || str_contains($requestURL, 'api/room-signage/v1'))) {
             if (config('app.server') == 'prod') {
                 $options['allowedOrigins'] = config('cors.device_environment_origins')['prod'];
             } elseif (config('app.server') == 'uat') {
